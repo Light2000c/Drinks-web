@@ -91,6 +91,9 @@
           </div>
       </div>
   </div>
+
+  <p></p>
+
 </div>
 <!--/ eCommerce statistic -->
 

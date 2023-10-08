@@ -18,8 +18,13 @@ use App\Http\Controllers\admin\TransactionController;
 use App\Http\Controllers\admin\ProductDetailController;
 use App\Http\Controllers\Auth\LoginController as AuthLoginController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\product\CartController as ProductCartController;
 use App\Http\Controllers\product\ProductDetailController as ProductProductDetailController;
 use App\Http\Controllers\product\ShopController;
+use App\Http\Controllers\profile\AccountController as ProfileAccountController;
+use App\Http\Controllers\profile\AddressController;
+use App\Http\Controllers\profile\OrderController as ProfileOrderController;
+use App\Http\Controllers\profile\WishlistController as ProfileWishlistController;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,24 +50,50 @@ Route::get('/about', [AboutController::class, 'index'])->name('about');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 
 Route::get('/login', [AuthLoginController::class, 'index'])->name('login');
+Route::post('/login', [AuthLoginController::class, 'login']);
 
 Route::get('/register', [RegisterController::class, 'index'])->name('register');
+Route::post('register', [RegisterController::class, 'store']);
 
 
 //Product Routes
 Route::get('/shop', [ShopController::class, 'index'])->name('shop');
 
-Route::get('/product-detail', [ProductProductDetailController::class, 'index'])->name('product-details');
+Route::get('/products/{product}', [ProductProductDetailController::class, 'index'])->name('product-details');
+
+Route::get('/cart', [ProductCartController::class, 'index'])->name('cart');
+Route::post('/cart/{product}', [ProductCartController::class, 'store'])->name('add-cart');
+Route::delete('/cart/{product}', [ProductCartController::class, 'destroy'])->name('delete-cart');
+
+
+//Profile Routes
+Route::get('/profile/account', [ProfileAccountController::class, 'index'])->name('account');
+
+Route::get('/profile/order', [ProfileOrderController::class, 'index'])->name('profile-order');
+
+Route::get('profile/wishlist', [ProfileWishlistController::class, 'index'])->name('profile-wishlist');
+
+Route::get('profile/address', [AddressController::class, 'index'])->name('profile-address');
 
 
 // Admin Routes
+
+Route::get('/admin/login', [LoginController::class, 'index'])->name('admin-login');
+Route::post('/admin/login', [LoginController::class, 'login']);
+
+Route::middleware(['is_admin'])->group(function() {
+
 Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('admin-dashboard');
 
 Route::get('/admin/products', [ProductController::class, 'index'])->name('admin-product');
+Route::post('/admin/products', [ProductController::class, 'store']);
+Route::delete('/admin/products/{product}', [ProductController::class, 'delete'])->name('admin-product-delete');
 
-Route::get('/admin/product-details', [ProductDetailController::class, 'index'])->name('admin-product-details');
+Route::get('/admin/products/details/{product}', [ProductDetailController::class, 'index'])->name('admin-product-details');
+Route::put('/admin/products/details/{product}', [ProductDetailController::class, 'update']);
 
 Route::get('/admin/carts', [CartController::class, 'index'])->name('admin-cart');
+Route::delete('/admin/carts/{cart}', [CartController::class, 'destroy'])->name('admin-delete-cart');
 
 Route::get('/admin/orders', [OrderController::class, 'index'])->name('admin-order');
 
@@ -76,4 +107,4 @@ Route::get('/admin/transactions', [TransactionController::class, 'index'])->name
 
 Route::get('/admin/settings', [SettingController::class, 'index'])->name('admin-setting');
 
-Route::get('/admin/login', [LoginController::class, 'index'])->name('admin-login');
+});

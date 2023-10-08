@@ -189,10 +189,12 @@ License: You must have a valid license purchased only from themeforest(the above
                             </div>
                         </li>
                     </ul>
+
                     <ul class="nav navbar-nav float-right">
+                        @if(Auth::user())
                         <li class="dropdown dropdown-user nav-item"><a
                                 class="dropdown-toggle nav-link dropdown-user-link" href="#"
-                                data-toggle="dropdown"><span class="mr-1 user-name text-bold-700">John Doe</span><span
+                                data-toggle="dropdown"><span class="mr-1 user-name text-bold-700">{{ Auth::user()->fullname }}</span><span
                                     class="avatar avatar-online"><img
                                         src="/web2/app-assets/images/portrait/small/avatar-s-19.png"
                                         alt="avatar"><i></i></span></a>
@@ -204,6 +206,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                     href="login-with-bg-image.html"><i class="ft-power"></i> Logout</a>
                             </div>
                         </li>
+                        @endif
                     </ul>
                 </div>
             </div>

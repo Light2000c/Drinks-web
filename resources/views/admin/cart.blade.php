@@ -34,25 +34,36 @@
                                 <th class="border-top-0">Quantity</th>
                                 <th class="border-top-0">Total</th>
                                 <th class="border-top-0">Created_at</th>
+                                <th class="border-top-0">Updated_at</th>
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach($carts as $cart)
                             <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td>{{ $cart->id }}</td>
+                                <td>{{ $cart->product_id }}</td>
+                                <td>{{ $cart->user_id }}</td>
+                                <td>{{ Str::words($cart->product->name, 8) }}</td>
+                                <td>{{ $cart->product->price }}</td>
+                                <td>{{ $cart->quantity }}</td>
+                                <td>{{ number_format($cart->quantity * $cart->product->price) }}</td>
+                                <td>{{ $cart->created_at }}</td>
+                                <td>{{ $cart->updated_at }}</td>
                                 <td>
-                                    <button class="btn btn-primary btn-sm"><i class="fa fa-trash"></i></button>
+                                    <form action="{{ route('admin-delete-cart', $cart) }}" method="post">
+                                        @csrf
+                                        @method("delete")
+                                    <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-trash"></i></button>
+                                </form>
                                 </td>
                             </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
+                <div class="m-2">
+                {{ $carts->links('pagination::bootstrap-5') }}
+            </div>
             </div>
         </div>
     </div>

@@ -19,11 +19,16 @@
     <!-- Main Style CSS -->
     <link rel="stylesheet" href="/web/assets/css/style.css">
 
+    <link rel="stylesheet" href="/personal/personal.css">
+
     {{-- font awesome link --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    {{-- <script src="jquery-3.6.4.min.js"></script> --}}
+
+            {{-- <script src="jquery-3.6.4.min.js"></script> --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+
+
 
 </head>
 
@@ -581,6 +586,8 @@
 
 <!-- Main JS -->
 <script src="/web/assets/js/main.js"></script>
+
+<script src="/personal/personal.js"></script>
 
 
 
