@@ -8150,12 +8150,26 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   text-align: right;
   line-height: 31px;
 }
+
+#form-filter{
+  padding-top: 10px;
+}
+#form-filter input {
+  background: none;
+  border: none;
+  font-size: 12px;
+  float: right;
+  text-align: right;
+  line-height: 31px;
+}
+
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
   .widget_list.widget_filter form input {
     width: 65px;
   }
 }
-.widget_list.widget_filter form button {
+
+#form-filter button {
   height: 30px;
   line-height: 30px;
   padding: 0 20px;
@@ -8167,7 +8181,25 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   -webkit-transition: 0.3s;
   transition: 0.3s;
 }
-.widget_list.widget_filter form button:hover {
+
+#form-filter form button:hover {
+  background: #ea000d;
+}
+
+#form-filter form button {
+  height: 30px;
+  line-height: 30px;
+  padding: 0 20px;
+  text-transform: capitalize;
+  color: #ffffff;
+  background: #262626;
+  border: 0;
+  border-radius: 30px;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+
+#form-filter form button:hover {
   background: #ea000d;
 }
 

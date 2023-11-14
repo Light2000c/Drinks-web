@@ -12,8 +12,10 @@ class ProductDetailController extends Controller
 {
     public function index(Product $product){
 
+        $products = Product::where('category', $product->category)->whereNot('id', $product->id)->orderBy('created_at', 'DESC')->take(4)->get();
         return view('product.productDetail', [
-            'product' => $product
+            'product' => $product,
+            'products' => $products
         ]);
     }
     

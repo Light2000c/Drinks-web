@@ -44,9 +44,9 @@
                                 <td>{{ $cart->product_id }}</td>
                                 <td>{{ $cart->user_id }}</td>
                                 <td>{{ Str::words($cart->product->name, 8) }}</td>
-                                <td>{{ $cart->product->price }}</td>
+                                <td>₦{{ number_format($cart->product->price) }}</td>
                                 <td>{{ $cart->quantity }}</td>
-                                <td>{{ number_format($cart->quantity * $cart->product->price) }}</td>
+                                <td>₦{{ number_format($cart->quantity * $cart->product->price) }}</td>
                                 <td>{{ $cart->created_at }}</td>
                                 <td>{{ $cart->updated_at }}</td>
                                 <td>

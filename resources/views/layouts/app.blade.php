@@ -9,13 +9,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="/web/assets/img/favicon.ico">
-    
-    <!-- CSS 
+
+    <!-- CSS
     ========================= -->
 
     <!-- Plugins CSS -->
     <link rel="stylesheet" href="/web/assets/css/plugins.css">
-    
+
     <!-- Main Style CSS -->
     <link rel="stylesheet" href="/web/assets/css/style.css">
 
@@ -25,7 +25,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 
-            {{-- <script src="jquery-3.6.4.min.js"></script> --}}
+    {{-- <script src="jquery-3.6.4.min.js"></script> --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 
 
@@ -38,12 +38,12 @@
     <header class="header_area">
         <!--header top start-->
         <div class="header_top">
-            <div class="container">  
+            <div class="container">
                 <div class="row align-items-center">
                     <div class="col-lg-4">
-                       <div class="welcome_text">
-                           <p>Welcome to <span> Drinks</span> </p>
-                       </div>
+                        <div class="welcome_text">
+                            <p>Welcome to <span> Drinks</span> </p>
+                        </div>
                     </div>
                     <div class="col-lg-8">
                         <div class="top_right text-right">
@@ -58,9 +58,9 @@
                                 </li>
 
                             </ul>
-                        </div> 
+                        </div>
                     </div>
-                    
+
                 </div>
             </div>
         </div>
@@ -77,60 +77,62 @@
                     <div class="col-lg-9">
                         <div class="header_middle_inner">
                             <div class="search-container">
-                               <form action="#">
+                                <form action="#">
                                     <div class="search_box">
                                         <input placeholder="Search product..." type="text">
-                                        <button type="submit"><i class="zmdi zmdi-search"></i></button> 
+                                        <button type="submit"><i class="zmdi zmdi-search"></i></button>
                                     </div>
                                 </form>
                             </div>
                             <div class="mini_cart_wrapper">
-                                <a href="javascript:void(0)"><i class="zmdi zmdi-shopping-basket"></i> <span>2items - $213.00</span> </a>
-                                <!--mini cart-->
-                                 <div class="mini_cart">
-                                    <div class="cart_item">
-                                       <div class="cart_img">
-                                           <a href="#"><img src="/web/assets/img/s-product/product.jpg" alt=""></a>
-                                       </div>
-                                        <div class="cart_info">
-                                            <a href="#">Condimentum Watches</a>
+                                @if (!Auth::user())
+                                    <a href="javascript:void(0)"><i class="zmdi zmdi-shopping-basket">
+                                        </i> <span> 0 - $00 </span> </a>
+                                @else
+                                    <a href="javascript:void(0)"><i class="zmdi zmdi-shopping-basket">
+                                        </i> <span>{{ $vCarts->count() . ' - ₦' . number_format($vCartsTotal) }}</span>
+                                    </a>
+                                    <!--mini cart-->
+                                    <div class="mini_cart">
+                                        @foreach ($vCarts->slice(0,2) as $cart)
+                                            <div class="cart_item">
+                                                <div class="cart_img">
+                                                    <a class="pt-1 pb-1" href="#" style="display: flex; justify-content: center"><img src="products/{{ $cart->product->image }}"
+                                                          style="height: 80px"  alt=""></a>
+                                                </div>
+                                                <div class="cart_info">
+                                                    <a href="#">{{ $cart->product->name }}</a>
 
-                                            <span class="quantity">Qty: 1</span>
-                                            <span class="price_cart">$60.00</span>
+                                                    <span class="quantity">Qty: {{ $cart->quantity }}</span>
+                                                    <span class="price_cart">₦{{ number_format($cart->product->price) }}</span>
 
+                                                </div>
+                                                <div class="cart_remove">
+                                                    <form action="{{ route('delete-cart', $cart->product) }}" method="post">
+                                                        @csrf
+                                                        @method('delete')
+                                                        <button type="submit" class="btn"><i class="fa fa-close"></i></button>
+                                                    </form>
+                                                  
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                        <div class="mini_cart_table">
+                                            <div class="cart_total">
+                                                <span>Subtotal:</span>
+                                                <span class="price">₦{{ number_format($vCartsTotal) }}</span>
+                                            </div>
                                         </div>
-                                        <div class="cart_remove">
-                                            <a href="#"><i class="ion-android-close"></i></a>
-                                        </div>
-                                    </div>
-                                    <div class="cart_item">
-                                       <div class="cart_img">
-                                           <a href="#"><img src="/web/assets/img/s-product/product2.jpg" alt=""></a>
-                                       </div>
-                                        <div class="cart_info">
-                                            <a href="#">Officiis debitis</a>
-                                            <span class="quantity">Qty: 1</span>
-                                            <span class="price_cart">$69.00</span>
-                                        </div>
-                                        <div class="cart_remove">
-                                            <a href="#"><i class="ion-android-close"></i></a>
-                                        </div>
-                                    </div>
-                                    <div class="mini_cart_table">
-                                        <div class="cart_total">
-                                            <span>Subtotal:</span>
-                                            <span class="price">$138.00</span>
-                                        </div>
-                                    </div>
 
-                                    <div class="mini_cart_footer">
-                                       <div class="cart_button">
-                                            <a href="cart.html">View cart</a>
-                                            <a href="checkout.html">Checkout</a>
+                                        <div class="mini_cart_footer">
+                                            <div class="cart_button">
+                                                <a href="{{ route('cart') }}">View cart</a>
+                                                <a href="checkout.html">Checkout</a>
+                                            </div>
                                         </div>
-                                    </div>
 
-                                </div>
+                                    </div>
+                                @endif
                                 <!--mini cart end-->
                             </div>
                         </div>
@@ -139,42 +141,46 @@
             </div>
         </div>
         <!--header center area end-->
-        
+
         <!--header middel start-->
         <div class="header_bottom">
             <div class="container">
                 <div class="row align-items-center">
                     <div class="col-lg-9">
-                        <div class="main_menu menu_two header_position"> 
-                            <nav>  
+                        <div class="main_menu menu_two header_position">
+                            <nav>
                                 <ul>
 
-                                    <li class="active"><a  href="index.html"><i class="fa fa-home"></i> home</a>
+                                    <li class="active"><a href="{{ route('home') }}"><i class="fa fa-home"></i> home</a>
                                     </li>
-                                    <li class="active"><a  href="index.html"><i class="fa fa-shopping-bag"></i> Shop</a>
+                                    <li class="active"><a href="{{ route('shop') }}"><i class="fa fa-shopping-bag"></i>
+                                            Shop</a>
                                     </li>
-                                    <li class="active"><a  href="index.html"><i class="fa fa-question"></i> Faq</a>
+                                    <li class="active"><a href="{{ route('home') }}"><i class="fa fa-question"></i>
+                                            Faq</a>
                                     </li>
-                                    <li class="active"><a  href="index.html"><i class="fa fa-info-circle"></i> About</a>
+                                    <li class="active"><a href="{{ route('about') }}"><i class="fa fa-info-circle"></i>
+                                            About</a>
                                     </li>
-                                    <li class="active"><a  href="index.html"><i class="fa fa-address-book"></i> Contact</a>
+                                    <li class="active"><a href="{{ route('contact') }}"><i
+                                                class="fa fa-address-book"></i> Contact</a>
                                     </li>
-                                </ul>  
-                            </nav> 
+                                </ul>
+                            </nav>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <!--header middel end-->
-     
+
     </header>
     <!--header area end-->
-    
+
     <!--Offcanvas menu area start-->
-    
+
     <div class="off_canvars_overlay">
-                
+
     </div>
     <div class="Offcanvas_menu">
         <div class="container">
@@ -186,12 +192,12 @@
                     </div>
                     <div class="Offcanvas_menu_wrapper">
                         <div class="canvas_close">
-                              <a href="javascript:void(0)"><i class="fa fa-close"></i></a>  
+                            <a href="javascript:void(0)"><i class="fa fa-close"></i></a>
                         </div>
                         <div class="welcome_text">
-                           <p>Welcome to <span>Electronics Store</span> </p>
-                       </div>
-                       
+                            <p>Welcome to <span>Electronics Store</span> </p>
+                        </div>
+
                         <div class="top_right">
                             <ul>
                                 <li class="top_links"><a href="#"><i class="fa fa-user"></i> My account</a>
@@ -204,23 +210,25 @@
                                 </li>
 
                             </ul>
-                        </div> 
+                        </div>
                         <div class="search-container">
-                           <form action="#">
+                            <form action="#">
                                 <div class="search_box">
                                     <input placeholder="Search product..." type="text">
-                                    <button type="submit"><i class="zmdi zmdi-search"></i></button> 
+                                    <button type="submit"><i class="zmdi zmdi-search"></i></button>
                                 </div>
                             </form>
-                        </div> 
+                        </div>
                         <div class="mini_cart_wrapper">
-                            <a href="javascript:void(0)"><i class="zmdi zmdi-shopping-basket"></i> <span>2items - $213.00</span> </a>
+                            <a href="javascript:void(0)"><i class="zmdi zmdi-shopping-basket"></i> <span>2items -
+                                    $213.00</span> </a>
                             <!--mini cart-->
-                             <div class="mini_cart">
+                            <div class="mini_cart">
                                 <div class="cart_item">
-                                   <div class="cart_img">
-                                       <a href="#"><img src="/web/assets/img/s-product/product.jpg" alt=""></a>
-                                   </div>
+                                    <div class="cart_img">
+                                        <a href="#"><img src="/web/assets/img/s-product/product.jpg"
+                                                alt=""></a>
+                                    </div>
                                     <div class="cart_info">
                                         <a href="#">Condimentum Watches</a>
 
@@ -233,9 +241,10 @@
                                     </div>
                                 </div>
                                 <div class="cart_item">
-                                   <div class="cart_img">
-                                       <a href="#"><img src="/web/assets/img/s-product/product2.jpg" alt=""></a>
-                                   </div>
+                                    <div class="cart_img">
+                                        <a href="#"><img src="/web/assets/img/s-product/product2.jpg"
+                                                alt=""></a>
+                                    </div>
                                     <div class="cart_info">
                                         <a href="#">Officiis debitis</a>
                                         <span class="quantity">Qty: 1</span>
@@ -253,7 +262,7 @@
                                 </div>
 
                                 <div class="mini_cart_footer">
-                                   <div class="cart_button">
+                                    <div class="cart_button">
                                         <a href="cart.html">View cart</a>
                                         <a href="checkout.html">Checkout</a>
                                     </div>
@@ -263,7 +272,7 @@
                             <!--mini cart end-->
                         </div>
                         <div id="menu" class="text-left ">
-                             <ul class="offcanvas_main_menu">
+                            <ul class="offcanvas_main_menu">
                                 <li class="menu-item-has-children active">
                                     <a href="#">Home</a>
                                 </li>
@@ -277,7 +286,7 @@
                                     <a href="about.html">about Us</a>
                                 </li>
                                 <li class="menu-item-has-children">
-                                    <a href="contact.html"> Contact Us</a> 
+                                    <a href="contact.html"> Contact Us</a>
                                 </li>
                             </ul>
                         </div>
@@ -298,7 +307,7 @@
         </div>
     </div>
     <!--Offcanvas menu area end-->
-    
+
 
 
     @yield('content')
@@ -306,8 +315,8 @@
 
 
 
-     <!--brand newsletter area start-->
-     <div class="brand_newsletter_area">
+    <!--brand newsletter area start-->
+    <div class="brand_newsletter_area">
         <div class="container">
             <div class="row">
                 <div class="col-12">
@@ -351,10 +360,10 @@
     </div>
     <!--brand area end-->
 
-    
+
     <!--footer area start-->
     <footer class="footer_widgets">
-        <div class="container">  
+        <div class="container">
             <div class="footer_top">
                 <div class="row">
                     <div class="col-lg-6 col-md-6">
@@ -362,32 +371,38 @@
                             <a href="index.html"><img src="/web/assets/img/logo/logo.png" alt=""></a>
                             <div class="footer_contact">
                                 <ul>
-                                    <li><i class="zmdi zmdi-home"></i><span>Addresss:</span> 2 Fauconberg Rd,Chiswick, London</li>
-                                    <li><i class="zmdi zmdi-phone-setting"></i><span>Phone:</span><a href="tel:(+1) 866-540-3229">(+1) 866-540-3229</a> </li>
-                                    <li><i class="zmdi zmdi-email"></i><span>Email:</span>  info@plazathemes.com</li>
+                                    <li><i class="zmdi zmdi-home"></i><span>Addresss:</span> 2 Fauconberg Rd,Chiswick,
+                                        London</li>
+                                    <li><i class="zmdi zmdi-phone-setting"></i><span>Phone:</span><a
+                                            href="tel:(+1) 866-540-3229">(+1) 866-540-3229</a> </li>
+                                    <li><i class="zmdi zmdi-email"></i><span>Email:</span> info@plazathemes.com</li>
                                 </ul>
                             </div>
-                             <div class="social_icone">
+                            <div class="social_icone">
                                 <ul>
-                                    <li class="share"><a href="#" title="rss"><i class="fa fa-share-alt"></i></a>
+                                    <li class="share"><a href="#" title="rss"><i
+                                                class="fa fa-share-alt"></i></a>
                                         <div class="social_title">
                                             <p>Subscribe</p>
                                             <h3>Rss Feed</h3>
-                                        </div> 
+                                        </div>
                                     </li>
-                                    <li class="twitter"><a href="#" title="twitter"><i class="fa fa-twitter"></i></a>
+                                    <li class="twitter"><a href="#" title="twitter"><i
+                                                class="fa fa-twitter"></i></a>
                                         <div class="social_title">
                                             <p>Follow Us</p>
                                             <h3>Twitter</h3>
-                                        </div> 
+                                        </div>
                                     </li>
-                                    <li class="facebook"><a href="#" title="facebook"><i class="fa fa-facebook"></i></a>
+                                    <li class="facebook"><a href="#" title="facebook"><i
+                                                class="fa fa-facebook"></i></a>
                                         <div class="social_title">
                                             <p>Find Us</p>
                                             <h3>Facebook</h3>
                                         </div>
                                     </li>
-                                    <li class="google_plus"><a href="#" title="google"><i class="fa fa-google-plus"></i></a>
+                                    <li class="google_plus"><a href="#" title="google"><i
+                                                class="fa fa-google-plus"></i></a>
                                         <div class="social_title">
                                             <p>Find Us</p>
                                             <h3>Google+</h3>
@@ -429,25 +444,25 @@
                                             <li><a href="#">Portfolio</a></li>
                                             <li><a href="#">Conditions</a></li>
                                             <li><a href="#"> Frequently Questions</a></li>
-                                           
+
                                         </ul>
                                     </div>
 
                                 </div>
                             </div>
                         </div>
-                        
+
                     </div>
                 </div>
             </div>
         </div>
-        
-         <div class="footer_bottom">      
+
+        <div class="footer_bottom">
             <div class="container">
-               <div class="row">
+                <div class="row">
                     <div class="col-lg-6 col-md-7">
                         <div class="copyright_area">
-                            <p>Copyright &copy; 2023 <a href="#"> pallas </a>  All Right Reserved.</p>
+                            <p>Copyright &copy; 2023 <a href="#"> pallas </a> All Right Reserved.</p>
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-5">
@@ -457,138 +472,162 @@
                     </div>
                 </div>
             </div>
-        </div>     
+        </div>
     </footer>
     <!--footer area end-->
-   
-   
+
+
     <!-- modal area start-->
-    <div class="modal fade" id="modal_box" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal fade" id="modal_box" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
+                    <span aria-hidden="true">&times;</span>
                 </button>
                 <div class="modal_body">
                     <div class="container">
                         <div class="row">
                             <div class="col-lg-5 col-md-5 col-sm-12">
-                                <div class="modal_tab">  
+                                <div class="modal_tab">
                                     <div class="tab-content product-details-large">
-                                        <div class="tab-pane fade show active" id="tab1" role="tabpanel" >
+                                        <div class="tab-pane fade show active" id="tab1" role="tabpanel">
                                             <div class="modal_tab_img">
-                                                <a href="#"><img src="/web/assets/img/product/product37.jpg" alt=""></a>    
+                                                <a href="#"><img src="/web/assets/img/product/product37.jpg"
+                                                        alt=""></a>
                                             </div>
                                         </div>
                                         <div class="tab-pane fade" id="tab2" role="tabpanel">
                                             <div class="modal_tab_img">
-                                                <a href="#"><img src="/web/assets/img/product/product24.jpg" alt=""></a>    
+                                                <a href="#"><img src="/web/assets/img/product/product24.jpg"
+                                                        alt=""></a>
                                             </div>
                                         </div>
                                         <div class="tab-pane fade" id="tab3" role="tabpanel">
                                             <div class="modal_tab_img">
-                                                <a href="#"><img src="/web/assets/img/product/product25.jpg" alt=""></a>    
+                                                <a href="#"><img src="/web/assets/img/product/product25.jpg"
+                                                        alt=""></a>
                                             </div>
                                         </div>
                                         <div class="tab-pane fade" id="tab4" role="tabpanel">
                                             <div class="modal_tab_img">
-                                                <a href="#"><img src="/web/assets/img/product/product22.jpg" alt=""></a>    
+                                                <a href="#"><img src="/web/assets/img/product/product22.jpg"
+                                                        alt=""></a>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="modal_tab_button">    
+                                    <div class="modal_tab_button">
                                         <ul class="nav product_navactive owl-carousel" role="tablist">
-                                            <li >
-                                                <a class="nav-link active" data-bs-toggle="tab" href="#tab1" role="tab" aria-controls="tab1" aria-selected="false"><img src="/web/assets/img/product/productbig1.jpg" alt=""></a>
+                                            <li>
+                                                <a class="nav-link active" data-bs-toggle="tab" href="#tab1"
+                                                    role="tab" aria-controls="tab1" aria-selected="false"><img
+                                                        src="/web/assets/img/product/productbig1.jpg"
+                                                        alt=""></a>
                                             </li>
                                             <li>
-                                                 <a class="nav-link" data-bs-toggle="tab" href="#tab2" role="tab" aria-controls="tab2" aria-selected="false"><img src="/web/assets/img/product/productbig2.jpg" alt=""></a>
+                                                <a class="nav-link" data-bs-toggle="tab" href="#tab2"
+                                                    role="tab" aria-controls="tab2" aria-selected="false"><img
+                                                        src="/web/assets/img/product/productbig2.jpg"
+                                                        alt=""></a>
                                             </li>
                                             <li>
-                                               <a class="nav-link button_three" data-bs-toggle="tab" href="#tab3" role="tab" aria-controls="tab3" aria-selected="false"><img src="/web/assets/img/product/productbig4.jpg" alt=""></a>
+                                                <a class="nav-link button_three" data-bs-toggle="tab" href="#tab3"
+                                                    role="tab" aria-controls="tab3" aria-selected="false"><img
+                                                        src="/web/assets/img/product/productbig4.jpg"
+                                                        alt=""></a>
                                             </li>
                                             <li>
-                                               <a class="nav-link" data-bs-toggle="tab" href="#tab4" role="tab" aria-controls="tab4" aria-selected="false"><img src="/web/assets/img/product/productbig5.jpg" alt=""></a>
+                                                <a class="nav-link" data-bs-toggle="tab" href="#tab4"
+                                                    role="tab" aria-controls="tab4" aria-selected="false"><img
+                                                        src="/web/assets/img/product/productbig5.jpg"
+                                                        alt=""></a>
                                             </li>
 
                                         </ul>
-                                    </div>    
-                                </div>  
-                            </div> 
+                                    </div>
+                                </div>
+                            </div>
                             <div class="col-lg-7 col-md-7 col-sm-12">
                                 <div class="modal_right">
                                     <div class="modal_title mb-10">
-                                        <h2>Handbag feugiat</h2> 
+                                        <h2>Handbag feugiat</h2>
                                     </div>
                                     <div class="modal_price mb-10">
-                                        <span class="new_price">$64.99</span>    
-                                        <span class="old_price" >$78.99</span>    
+                                        <span class="new_price">$64.99</span>
+                                        <span class="old_price">$78.99</span>
                                     </div>
                                     <div class="modal_description mb-15">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia iste laborum ad impedit pariatur esse optio tempora sint ullam autem deleniti nam in quos qui nemo ipsum numquam, reiciendis maiores quidem aperiam, rerum vel recusandae </p>    
-                                    </div> 
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia iste
+                                            laborum ad impedit pariatur esse optio tempora sint ullam autem deleniti nam
+                                            in quos qui nemo ipsum numquam, reiciendis maiores quidem aperiam, rerum vel
+                                            recusandae </p>
+                                    </div>
                                     <div class="variants_selects">
                                         <div class="variants_size">
-                                           <h2>size</h2>
-                                           <select class="select_option">
-                                               <option selected value="1">s</option>
-                                               <option value="1">m</option>
-                                               <option value="1">l</option>
-                                               <option value="1">xl</option>
-                                               <option value="1">xxl</option>
-                                           </select>
+                                            <h2>size</h2>
+                                            <select class="select_option">
+                                                <option selected value="1">s</option>
+                                                <option value="1">m</option>
+                                                <option value="1">l</option>
+                                                <option value="1">xl</option>
+                                                <option value="1">xxl</option>
+                                            </select>
                                         </div>
                                         <div class="variants_color">
-                                           <h2>color</h2>
-                                           <select class="select_option">
-                                               <option selected value="1">purple</option>
-                                               <option value="1">violet</option>
-                                               <option value="1">black</option>
-                                               <option value="1">pink</option>
-                                               <option value="1">orange</option>
-                                           </select>
+                                            <h2>color</h2>
+                                            <select class="select_option">
+                                                <option selected value="1">purple</option>
+                                                <option value="1">violet</option>
+                                                <option value="1">black</option>
+                                                <option value="1">pink</option>
+                                                <option value="1">orange</option>
+                                            </select>
                                         </div>
                                         <div class="modal_add_to_cart">
                                             <form action="#">
-                                                <input min="0" max="100" step="2" value="1" type="number">
+                                                <input min="0" max="100" step="2" value="1"
+                                                    type="number">
                                                 <button type="submit">add to cart</button>
                                             </form>
-                                        </div>   
+                                        </div>
                                     </div>
                                     <div class="modal_social">
                                         <h2>Share this product</h2>
                                         <ul>
-                                            <li class="facebook"><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                            <li class="twitter"><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                            <li class="pinterest"><a href="#"><i class="fa fa-pinterest"></i></a></li>
-                                            <li class="google-plus"><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                                            <li class="linkedin"><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                                        </ul>    
-                                    </div>      
-                                </div>    
-                            </div>    
-                        </div>     
+                                            <li class="facebook"><a href="#"><i class="fa fa-facebook"></i></a>
+                                            </li>
+                                            <li class="twitter"><a href="#"><i class="fa fa-twitter"></i></a>
+                                            </li>
+                                            <li class="pinterest"><a href="#"><i
+                                                        class="fa fa-pinterest"></i></a></li>
+                                            <li class="google-plus"><a href="#"><i
+                                                        class="fa fa-google-plus"></i></a></li>
+                                            <li class="linkedin"><a href="#"><i class="fa fa-linkedin"></i></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>    
+                </div>
             </div>
         </div>
     </div>
 
-     <!-- modal area end-->
+    <!-- modal area end-->
 
 
 
-<!-- JS
+    <!-- JS
 ============================================ -->
 
-<!-- Plugins JS -->
-<script src="/web/assets/js/plugins.js"></script>
+    <!-- Plugins JS -->
+    <script src="/web/assets/js/plugins.js"></script>
 
-<!-- Main JS -->
-<script src="/web/assets/js/main.js"></script>
+    <!-- Main JS -->
+    <script src="/web/assets/js/main.js"></script>
 
-<script src="/personal/personal.js"></script>
-
+    <script src="/personal/personal.js"></script>
 
 
 </body>

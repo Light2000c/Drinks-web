@@ -78,6 +78,7 @@
                                                     @enderror
                                                 </div>
 
+
                                             </div>
                                             <div class="col m-2 p-2 ">
                                                 <div class="form-group">
@@ -113,11 +114,26 @@
                                                     <div class="col form-group">
                                                         <label for="price">Category</label>
                                                         <select class="form-control" name="category" id="">
-                                                            <option value="" selected>Select Product Category</option>
-                                                            <option value="wine" selected>Wine</option>
+                                                            <option value="">Select Product Category</option>
+                                                            @foreach($categories as $category)
+                                                            @if($product->category == $category->title)
+                                                            <option value="{{ $category->title }}" selected>{{ $category->title }}</option>
+                                                            @else
+                                                            <option value="{{ $category->title }}" >{{ $category->title }}</option>
+                                                            @endif
+                                                            @endforeach
                                                         </select>
                                                         @error('category')
                                                             <small class='text-danger'>{{ $message }}</small>
+                                                        @enderror
+                                                    </div>
+
+                                                    <div class="col form-group">
+                                                        <label for="brand">Quantity (Optional)</label>
+                                                        <input class="form-control" value="{{ $product->quantity }}" type="number" name="quantity"
+                                                            placeholder="Product Quantity">
+                                                        @error('quantity')
+                                                            <small class="text-danger">{{ $message }}</small>
                                                         @enderror
                                                     </div>
 

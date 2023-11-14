@@ -234,9 +234,12 @@ License: You must have a valid license purchased only from themeforest(the above
                 <li class=" nav-item"><a href="{{ route('admin-order') }}"><i class="fa fa-shopping-bag"></i><span
                             class="menu-title" data-i18n="Shopping Cart">Order</span></a>
                 </li>
-                <li class=" nav-item"><a href="{{ route('admin-transaction') }}"><i class="fa fa-credit-card"></i><span
-                            class="menu-title" data-i18n="Checkout">Transaction</span></a>
+                <li class=" nav-item"><a href="{{ route('admin-category') }}"><i class="fa fa-list-alt"></i><span
+                            class="menu-title" data-i18n="Checkout">Category</span></a>
                 </li>
+                <li class=" nav-item"><a href="{{ route('admin-transaction') }}"><i class="fa fa-credit-card"></i><span
+                    class="menu-title" data-i18n="Checkout">Transaction</span></a>
+        </li>
                 <li class=" nav-item"><a href="{{ route('admin-wishlist') }}"><i class="fa fa-heart-o"></i><span
                             class="menu-title" data-i18n="Order">Wishlist</span></a>
                 </li>

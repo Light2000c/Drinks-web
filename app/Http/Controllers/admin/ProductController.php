@@ -2,18 +2,21 @@
 
 namespace App\Http\Controllers\admin;
 
+use Exception;
 use App\Models\Product;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Exception;
 
 class ProductController extends Controller
 {
     public function index()
     {
+        $categories = Category::get();
         $products = Product::OrderBy('created_at', 'DESC')->paginate(10);
         return view('admin.product', [
-            'products' => $products
+            'products' => $products,
+            'categories' => $categories
         ]);
     }
 

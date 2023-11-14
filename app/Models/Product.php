@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use App\Models\Cart;
+use App\Models\Order;
+use App\Models\Wishlist;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -15,6 +17,7 @@ class Product extends Model
         'price',
         'discount',
         'category',
+        'quantity',
         'brand',
         'colour',
         'size',
@@ -22,15 +25,26 @@ class Product extends Model
         'description'
     ];
 
-    public function cart(){
+    public function cart()
+    {
         return $this->hasMany(Cart::class);
     }
 
-    public function hasCart(User $user){
+    public function hasCart(User $user)
+    {
         return $this->cart->contains('user_id', $user->id);
     }
 
-    public function cartQuantity(User $user){
-        return $this->hasCart($user)?$this->cart->where('user_id', $user->id)->first()->quantity : 1;
+    public function cartQuantity(User $user)
+    {
+        return $this->hasCart($user) ? $this->cart->where('user_id', $user->id)->first()->quantity : 1;
+    }
+
+    public function order(){
+        return $this->hasMany(Order::class());
+    }
+
+    public function wish(){
+      return  $this->hasMany(Wishlist::class);
     }
 }

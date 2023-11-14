@@ -82,17 +82,43 @@
                                                         @enderror
                                                     </div>
 
+
                                                     <div class="col form-group">
                                                         <label for="price">Category</label>
                                                         <select class="form-control" name="category" id="">
                                                             <option value="" selected>Select Product Category</option>
-                                                            <option value="wine" selected>Wine</option>
+                                                            @foreach ($categories as $category)
+                                                                <option value="{{ $category->title }}">
+                                                                    {{ $category->title }}</option>
+                                                            @endforeach
                                                         </select>
                                                         @error('category')
                                                             <small class="text-danger">{{ $message }}</small>
                                                         @enderror
                                                     </div>
                                                 </div>
+
+                                                <div class="row">
+                                                    <div class="col form-group">
+                                                        <label for="brand">Quantity (Optional)</label>
+                                                        <input class="form-control" type="number" name="quantity"
+                                                            placeholder="Product Quantity">
+                                                        @error('quantity')
+                                                            <small class="text-danger">{{ $message }}</small>
+                                                        @enderror
+                                                    </div>
+
+
+                                                    <div class="col form-group">
+                                                        <label for="brand">Brand (Optional)</label>
+                                                        <input class="form-control" type="text" name="brand"
+                                                            placeholder="Product Brand">
+                                                        @error('brand')
+                                                            <small class="text-danger">{{ $message }}</small>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+
 
                                                 <div class="row">
                                                     <div class="col form-group">
@@ -163,6 +189,7 @@
                                             <th class="border-top-0">Price</th>
                                             <th class="border-top-0">Discount</th>
                                             <th class="border-top-0">Category</th>
+                                            <th class="border-top-0">Quantity</th>
                                             <th class="border-top-0">Brand</th>
                                             <th class="border-top-0">Colour</th>
                                             <th class="border-top-0">Size</th>
@@ -181,6 +208,7 @@
                                                 <td>{{ $product->price }}</td>
                                                 <td>{{ $product->discount }}</td>
                                                 <td>{{ $product->category }}</td>
+                                                <td>{{ $product->quantity }}</td>
                                                 <td>{{ $product->brand }}</td>
                                                 <td>{{ $product->colour }}</td>
                                                 <td>{{ $product->size }}</td>

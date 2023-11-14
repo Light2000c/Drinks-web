@@ -32,24 +32,34 @@
                                 <th class="border-top-0">Product Name</th>
                                 <th class="border-top-0">Price</th>
                                 <th class="border-top-0">Quantity</th>
+                                <th class="border-top-0">Rerence ID</th>
                                 <th class="border-top-0">Total</th>
                                 <th class="border-top-0">Created_at</th>
+                                <th class="border-top-0">Updated_at</th>
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach($orders as $order)
                             <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td>{{ $order->id }}</td>
+                                <td>{{ $order->product_id }}</td>
+                                <td>{{ $order->user_id }}</td>
+                                <td>{{ $order->product->name }}</td>
+                                <td>₦{{ number_format($order->product->price) }}</td>
+                                <td>{{ $order->quantity }}</td>
+                                <td>{{ $order->reference_id }}</td>
+                                <td>₦{{ number_format($order->product->price * $order->quantity) }}</td>
+                                <td>{{ $order->created_at }}</td>
+                                <td>{{ $order->updated_at }}</td>
                                 <td>
+                                    <form action="{{ route('admin-delete-order', $order) }}" method="post">
+                                        @csrf
+                                        @method('delete')
                                     <button class="btn btn-primary btn-sm"><i class="fa fa-trash"></i></button>
+                                </form>
                                 </td>
                             </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

@@ -69,7 +69,9 @@
 
                         <div class="row no-gutters shop_wrapper">
                             @foreach ($products as $product)
-                            <x-product-component :product="$product"/>
+                                <div class="col-lg-4 col-md-4 col-12 ">
+                                    <x-product-component :product="$product" />
+                                </div>
                             @endforeach
                         </div>
 
@@ -83,66 +85,48 @@
                             <div class="shop_sidebar_banner mb-50">
                                 <a href="#"><img src="/web/assets/img/bg/banner16.jpg" alt=""></a>
                             </div>
-                            <div class="widget_list widget_categories">
-                                <h2>categories</h2>
-                                <ul>
-                                    <li>
-                                        <a href="#">Categories1 <span>(6)</span></a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Categories2 <span>(10)</span></a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Categories3 <span>(4)</span></a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Categories4 <span>(10)</span></a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Categories5 <span>(8)</span></a>
-                                    </li>
+                            <form action="{{ route('shop') }}" method="post">
+                                @csrf
+                                <div class="widget_list widget_categories">
+                                    <h2>categories</h2>
+                                    @foreach ($categories as $category)
+                                        <div>
+                                            <div class="form-check ms-3 mb-2">
+                                                <input class="form-check-input checkbox" name="category"
+                                                    style="font-size: 16px" type="checkbox" value="{{ $category->title }}"
+                                                    id="flexCheckIndeterminate">
+                                                <label class="form-check-label" style="font-size: 16px"
+                                                    for="flexCheckIndeterminate">
+                                                    {{ $category->title }}
+                                                </label>
+                                            </div>
+                                        </div>
+                                    @endforeach
 
-                                </ul>
-                            </div>
-                            <div class="widget_list widget_filter">
-                                <h2>Filter by price</h2>
-                                <form action="#">
-                                    <div id="slider-range"></div>
-                                    <button type="submit">Filter</button>
-                                    <input type="text" name="text" id="amount" />
+                                </div>
+                                <div class="widget_list widget_filter mb-3">
+                                    <h2>Filter by price</h2>
+                                    {{-- <form action="#"> --}}
+                                    <div id="form-filter">
+                                        <div id="slider-range"></div>
+                                        <input type="text" name="price" id="amount" />
+                                    </div>
+                                    {{-- </form> --}}
+                                </div>
 
-                                </form>
-                            </div>
+                                
+                                    <div class="d-grid mb-5" style="width: 100%">
+                                        <button type="submit" class="btn btn-primary btn-block">Apply Filter</button>
+                                    </div>
+                            </form>
 
-
-                            <div class="widget_list">
-                                <h2>Manufacturer</h2>
-                                <ul>
-                                    <li>
-                                        <a href="#">Brake Parts <span>(6)</span></a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Accessories <span>(10)</span></a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Engine Parts <span>(4)</span></a>
-                                    </li>
-                                    <li>
-                                        <a href="#">hermes <span>(10)</span></a>
-                                    </li>
-                                    <li>
-                                        <a href="#">louis vuitton <span>(8)</span></a>
-                                    </li>
-
-                                </ul>
-                            </div>
                             <div class="widget_list recent_product">
                                 <h2>Top Rated Products</h2>
                                 <div class="recent_product_container">
                                     <div class="recent_product_list">
                                         <div class="recent_product_thumb">
-                                            <a href="product-details.html"><img
-                                                    src="/web/assets/img/s-product/product.jpg" alt=""></a>
+                                            <a href="product-details.html"><img src="/web/assets/img/s-product/product.jpg"
+                                                    alt=""></a>
                                         </div>
                                         <div class="recent_product_content">
                                             <h3><a href="product-details.html">Natus erro</a></h3>
@@ -410,21 +394,36 @@
             var products = @json($products);
 
 
-            if(userId != ''){
-            $('document').ready(async function() {
-                await load(userId);
-                console.log(products.data);
-                let data = products.data;
+            if (userId != '') {
+                $('document').ready(async function() {
+                    await load(userId);
+                    console.log(products.data);
+                    let data = products.data;
 
-                data.forEach(element => {
-                    if (checkCart(element.id)) {
-                        $('.addwrapper' + element.id).hide();
-                        $('.removewrapper' + element.id).show();
-                        console.log("id", element.id);
+                    data.forEach(element => {
+                        if (checkCart(element.id)) {
+                            $('.addwrapper' + element.id).hide();
+                            $('.removewrapper' + element.id).show();
+                            console.log("id", element.id);
+                        }
+                    });
+                });
+            }
+        </script>
+
+        <script>
+            const checkboxes = document.querySelectorAll('.checkbox');
+
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    if (this.checked) {
+                        checkboxes.forEach(cb => {
+                            if (cb !== this) {
+                                cb.checked = false;
+                            }
+                        });
                     }
                 });
             });
-        }
-
         </script>
     @endsection

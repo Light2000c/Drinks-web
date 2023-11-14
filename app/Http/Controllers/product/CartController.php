@@ -13,13 +13,22 @@ class CartController extends Controller
 {
     public function index()
     {
-        return view('product.cart');
+        $carts = Cart::where('user_id', Auth::user()->id)->paginate(8);
+
+        $total = 0;
+        foreach($carts as $cart){
+           $sum = $cart->product->price * $cart->quantity;
+            $total = $total + $sum;
+        }
+
+        return view('product.cart', [
+            'carts' => $carts,
+            'total' => $total
+        ]);
     }
 
     public function store(Product $product)
     {
-
-        dd("yes");
 
         $user_id = Auth()->user()->id;
 

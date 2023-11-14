@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\admin;
 
+use Exception;
 use App\Models\Product;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Exception;
 
 class ProductDetailController extends Controller
 {
@@ -15,8 +16,11 @@ class ProductDetailController extends Controller
             return back();
         }
 
+        $categories = Category::get();
+
         return view('admin.productDetail', [
             'product' => $product,
+            'categories' => $categories
         ]);
     }
 
@@ -37,6 +41,7 @@ class ProductDetailController extends Controller
             'name' => $request->name == $product->name ? 'required' : 'required|unique:products,name',
             'price' => 'required',
             'category' => 'required',
+            'quantity' => 'required',
             'image' => 'required|mimes:jpeg,png,jpg,jfif,webp',
             'description' => 'required',
         ]);
@@ -56,6 +61,7 @@ class ProductDetailController extends Controller
             'price' => $request->price,
             'discount' =>  $request->discount,
             'brand' => $request->brand,
+            'quantity' => $request->quantity,
             'colour' => $request->colour,
             'size' => $request->size,
             'category' => $request->category,
@@ -83,6 +89,7 @@ class ProductDetailController extends Controller
             'name' => $request->name == $product->name ? 'required' : 'required|unique:products,name',
             'price' => 'required',
             'category' => 'required',
+            'quantity' => 'required',
             'description' => 'required',
         ]);
 
@@ -92,6 +99,7 @@ class ProductDetailController extends Controller
             'name' => $request->name,
             'price' => $request->price,
             'discount' =>  $request->discount,
+            'quantity' => $request->quantity,
             'brand' => $request->brand,
             'colour' => $request->colour,
             'size' => $request->size,
