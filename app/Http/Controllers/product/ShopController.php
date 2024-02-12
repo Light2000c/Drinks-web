@@ -63,15 +63,17 @@ class ShopController extends Controller
         }
 
         if ($category == null && $price == null) {
-            $products = Product::OrderBy('created_at', 'DESC')->paginate(12);
+            $products = Product::OrderBy('created_at', 'DESC')->skip(3)->paginate(12);
         }
 
         // $products = Product::OrderBy('created_at', 'DESC')->paginate(12);
         $categories = Category::get();
+        $newProducts = Product::OrderBy('created_at', 'DESC')->take(3)->get();
 
         return view('product.shop', [
             'products' => $products,
-            'categories' => $categories
+            'categories' => $categories,
+            "newProducts" => $newProducts,
         ]);
     }
 

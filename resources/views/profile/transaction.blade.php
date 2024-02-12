@@ -29,12 +29,11 @@
                     <!-- Nav tabs -->
                     <div class="dashboard_tab_button">
                         <ul role="tablist" class="nav flex-column dashboard-list">
-                            <li><a href="#dashboard"  class="nav-link active">Dashboard</a></li>
-                            <li> <a href="#orders"  class="nav-link">Orders</a></li>
-                            <li><a href="#downloads"  class="nav-link">Downloads</a></li>
-                            <li><a href="#address"  class="nav-link">Addresses</a></li>
-                            <li><a href="#account-details"  class="nav-link">Account details</a></li>
-                            <li><a href="login.html" class="nav-link">logout</a></li>
+                            <li><a href="{{ route('account') }}" class="nav-link">Dashboard</a></li>
+                            <li><a href="{{ route('profile-order') }}" class="nav-link active">Order</a></li>
+                            <li><a href="{{ route('profile-wishlist') }}" class="nav-link">Saved Items</a></li>
+                            <li><a href="{{ route('profile-address') }}" class="nav-link">Addresses</a></li>
+                            <li><a href="" class="nav-link">logout</a></li>
                         </ul>
                     </div>    
                 </div>

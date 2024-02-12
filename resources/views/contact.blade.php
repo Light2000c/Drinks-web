@@ -19,7 +19,7 @@
     <!--breadcrumbs area end-->
     
      <!--contact map start-->
-    <div class="contact_map mt-60">
+    {{-- <div class="contact_map mt-60">
        <div class="container">
             <div class="row">
                 <div class="col-12">
@@ -29,17 +29,17 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
     <!--contact map end-->
     
     <!--contact area start-->
-    <div class="contact_area">
-        <div class="container">   
+    <div class="contact_area mt-5">
+        <div class="container mt-5">   
             <div class="row">
                 <div class="col-lg-6 col-md-12">
                    <div class="contact_message content">
                         <h3>contact us</h3>    
-                         <p>Claritas est etiam processus dynamicus, qui sequitur mutationem consuetudium lectorum. Mirum est notare quam littera gothica, quam nunc putamus parum claram anteposuerit litterarum formas human. qui sequitur mutationem consuetudium lectorum. Mirum est notare</p>
+                         <p>Get in touch with us at Drinks! Whether you have a question about our products, need assistance with an order, or just want to share your feedback, we're here to help. Our dedicated team is committed to providing you with prompt and personalized assistance, ensuring your experience with us is nothing short of exceptional. Reach out to us today—we can't wait to hear from you!</p>
                         <ul>
                             <li><i class="fa fa-fax"></i>  Address : No 40 Baria Sreet 133/2 NewYork City</li>
                             <li><i class="fa fa-phone"></i> <a href="#">Infor@roadthemes.com</a></li>
@@ -50,25 +50,37 @@
                 <div class="col-lg-6 col-md-12">
                    <div class="contact_message form">
                         <h3>Tell us your project</h3>   
-                        <form id="contact-form" method="POST"  action="assets/mail.php">
+                        <form  action="{{ route('contact') }}" method="POST">
+                            @csrf
                             <p>  
                                <label> Your Name (required)</label>
-                                <input name="name" placeholder="Name *" type="text"> 
+                                <input name="name" placeholder="Name *" value="{{ old('name') }}" type="text">
+                                @error('name')
+                                <small class="text-danger">{{ $message }}</small>
+                                @enderror
                             </p>
                             <p>       
                                <label>  Your Email (required)</label>
-                                <input name="email" placeholder="Email *" type="email">
+                                <input name="email" placeholder="Email *" value="{{ old('email') }}" type="email">
+                                @error('email')
+                                <small class="text-danger">{{ $message }}</small>
+                                @enderror
                             </p>
                             <p>          
                                <label>  Subject</label>
-                                <input name="subject" placeholder="Subject *" type="text">
+                                <input name="subject" placeholder="Subject *"  value="{{ old('subject') }}" type="text">
+                                @error('subject')
+                                <small class="text-danger">{{ $message }}</small>
+                                @enderror
                             </p>    
-                            <div class="contact_textarea">
+                            <div class="contact_textarea mb-3">
                                 <label>  Your Message</label>
                                 <textarea placeholder="Message *" name="message"  class="form-control2" ></textarea>     
+                                @error('message')
+                                <small class="text-danger">{{ $message }}</small>
+                                @enderror
                             </div>   
                             <button type="submit"> Send</button>  
-                            <p class="form-messege"></p>
                         </form> 
 
                     </div> 

@@ -7,6 +7,9 @@
     <title>Pallas - eCommerce Bootstrap 4 Template</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
+
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="/web/assets/img/favicon.ico">
 
@@ -48,12 +51,19 @@
                     <div class="col-lg-8">
                         <div class="top_right text-right">
                             <ul>
-                                <li class="top_links"><a href="#"><i class="fa fa-user"></i> My account </a>
+                                <li class="top_links"><a><i class="fa fa-user"></i> {{ Auth::user()->fullname ?? "My account" }} </a>
                                     <ul class="dropdown_links">
-                                        <li><a href="checkout.html">Checkout </a></li>
-                                        <li><a href="my-account.html">My Account </a></li>
-                                        <li><a href="cart.html">Shopping Cart</a></li>
-                                        <li><a href="wishlist.html">Wishlist</a></li>
+                                        <li><a href="{{ route('account') }}">Profile</a></li>
+                                        <li><a href="{{ route('cart') }}">Cart</a></li>
+                                        <li><a href="{{ route('profile-wishlist') }}">Wishlist</a></li>
+                                        <li class="mt-2 mb-2">
+                                            <form action="{{ route('logout') }}" method="post">
+                                                @csrf
+                                                <div class="d-grid">
+                                                    <button class="btn btn-danger" type="submit">Logout</button>
+                                                </div>
+                                            </form>
+                                        </li>
                                     </ul>
                                 </li>
 
@@ -77,12 +87,23 @@
                     <div class="col-lg-9">
                         <div class="header_middle_inner">
                             <div class="search-container">
-                                <form action="#">
+                                <form action="" method="post">
+                                    @csrf
                                     <div class="search_box">
-                                        <input placeholder="Search product..." type="text">
-                                        <button type="submit"><i class="zmdi zmdi-search"></i></button>
+                                        <input name="keyword" id="keyword" placeholder="Search product..."
+                                            type="text">
+                                        <button type="button" id="submitBtn"><i class="zmdi zmdi-search"></i></button>
                                     </div>
                                 </form>
+                                {{-- <script>
+                                    $("#submitBtn").click(function () {
+                                        var keyword = document.getElementById("keyword").value;
+
+                                        console.log(keyword);
+
+                                        window.location.href = `http://127.0.0.1:8000/search/${keyword}`;
+                                    });
+                                </script> --}}
                             </div>
                             <div class="mini_cart_wrapper">
                                 @if (!Auth::user())
@@ -94,26 +115,31 @@
                                     </a>
                                     <!--mini cart-->
                                     <div class="mini_cart">
-                                        @foreach ($vCarts->slice(0,2) as $cart)
+                                        @foreach ($vCarts->slice(0, 2) as $cart)
                                             <div class="cart_item">
                                                 <div class="cart_img">
-                                                    <a class="pt-1 pb-1" href="#" style="display: flex; justify-content: center"><img src="products/{{ $cart->product->image }}"
-                                                          style="height: 80px"  alt=""></a>
+                                                    <a class="pt-1 pb-1" href="#"
+                                                        style="display: flex; justify-content: center"><img
+                                                            src="products/{{ $cart->product->image }}"
+                                                            style="height: 80px" alt=""></a>
                                                 </div>
                                                 <div class="cart_info">
                                                     <a href="#">{{ $cart->product->name }}</a>
 
                                                     <span class="quantity">Qty: {{ $cart->quantity }}</span>
-                                                    <span class="price_cart">₦{{ number_format($cart->product->price) }}</span>
+                                                    <span
+                                                        class="price_cart">₦{{ number_format($cart->product->price) }}</span>
 
                                                 </div>
                                                 <div class="cart_remove">
-                                                    <form action="{{ route('delete-cart', $cart->product) }}" method="post">
+                                                    <form action="{{ route('delete-cart', $cart->product) }}"
+                                                        method="post">
                                                         @csrf
                                                         @method('delete')
-                                                        <button type="submit" class="btn"><i class="fa fa-close"></i></button>
+                                                        <button type="submit" class="btn"><i
+                                                                class="fa fa-close"></i></button>
                                                     </form>
-                                                  
+
                                                 </div>
                                             </div>
                                         @endforeach
@@ -151,15 +177,18 @@
                             <nav>
                                 <ul>
 
-                                    <li class="active"><a href="{{ route('home') }}"><i class="fa fa-home"></i> home</a>
+                                    <li class="active"><a href="{{ route('home') }}"><i class="fa fa-home"></i>
+                                            home</a>
                                     </li>
-                                    <li class="active"><a href="{{ route('shop') }}"><i class="fa fa-shopping-bag"></i>
+                                    <li class="active"><a href="{{ route('shop') }}"><i
+                                                class="fa fa-shopping-bag"></i>
                                             Shop</a>
                                     </li>
-                                    <li class="active"><a href="{{ route('home') }}"><i class="fa fa-question"></i>
+                                    {{-- <li class="active"><a href="{{ route('home') }}"><i class="fa fa-question"></i>
                                             Faq</a>
-                                    </li>
-                                    <li class="active"><a href="{{ route('about') }}"><i class="fa fa-info-circle"></i>
+                                    </li> --}}
+                                    <li class="active"><a href="{{ route('about') }}"><i
+                                                class="fa fa-info-circle"></i>
                                             About</a>
                                     </li>
                                     <li class="active"><a href="{{ route('contact') }}"><i
@@ -195,98 +224,111 @@
                             <a href="javascript:void(0)"><i class="fa fa-close"></i></a>
                         </div>
                         <div class="welcome_text">
-                            <p>Welcome to <span>Electronics Store</span> </p>
+                            <p>Welcome to <span>Drinks</span> </p>
                         </div>
 
                         <div class="top_right">
                             <ul>
-                                <li class="top_links"><a href="#"><i class="fa fa-user"></i> My account</a>
+                                <li class="top_links"><a href="#"><i class="fa fa-user"></i>  {{ Auth::user()->fullname ?? "My account" }}</a>
                                     <ul class="dropdown_links">
-                                        <li><a href="checkout.html">Checkout </a></li>
-                                        <li><a href="my-account.html">My Account </a></li>
-                                        <li><a href="cart.html">Shopping Cart</a></li>
-                                        <li><a href="wishlist.html">Wishlist</a></li>
+                                        <li><a href="{{ route('account') }}">Profile</a></li>
+                                        <li><a href="{{ route('cart') }}">Cart</a></li>
+                                        <li><a href="{{ route('profile-wishlist') }}">Wishlist</a></li>
+                                        <li class="mt-2 mb-2">
+                                            <form action="{{ route('logout') }}" method="post">
+                                                @csrf
+                                                <div class="d-grid">
+                                                    <button class="btn btn-danger" type="submit">Logout</button>
+                                                </div>
+                                            </form>
+                                        </li>
                                     </ul>
                                 </li>
 
                             </ul>
                         </div>
                         <div class="search-container">
-                            <form action="#">
+                            <form action="" method="post">
+                                @csrf
                                 <div class="search_box">
-                                    <input placeholder="Search product..." type="text">
-                                    <button type="submit"><i class="zmdi zmdi-search"></i></button>
+                                    <input name="keyword" id="keyword2" placeholder="Search product..."
+                                        type="text">
+                                    <button type="button" id="submitBtn2"><i class="zmdi zmdi-search"></i></button>
                                 </div>
                             </form>
                         </div>
                         <div class="mini_cart_wrapper">
-                            <a href="javascript:void(0)"><i class="zmdi zmdi-shopping-basket"></i> <span>2items -
-                                    $213.00</span> </a>
-                            <!--mini cart-->
-                            <div class="mini_cart">
-                                <div class="cart_item">
-                                    <div class="cart_img">
-                                        <a href="#"><img src="/web/assets/img/s-product/product.jpg"
-                                                alt=""></a>
-                                    </div>
-                                    <div class="cart_info">
-                                        <a href="#">Condimentum Watches</a>
+                            @if (!Auth::user())
+                                <a href="javascript:void(0)"><i class="zmdi zmdi-shopping-basket">
+                                    </i> <span> 0 - $00 </span> </a>
+                            @else
+                                <a href="javascript:void(0)"><i class="zmdi zmdi-shopping-basket">
+                                    </i> <span>{{ $vCarts->count() . ' - ₦' . number_format($vCartsTotal) }}</span>
+                                </a>
+                                <!--mini cart-->
+                                <div class="mini_cart">
+                                    @foreach ($vCarts->slice(0, 2) as $cart)
+                                        <div class="cart_item">
+                                            <div class="cart_img">
+                                                <a class="pt-1 pb-1" href="#"
+                                                    style="display: flex; justify-content: center"><img
+                                                        src="products/{{ $cart->product->image }}"
+                                                        style="height: 80px" alt=""></a>
+                                            </div>
+                                            <div class="cart_info">
+                                                <a href="#">{{ $cart->product->name }}</a>
 
-                                        <span class="quantity">Qty: 1</span>
-                                        <span class="price_cart">$60.00</span>
+                                                <span class="quantity">Qty: {{ $cart->quantity }}</span>
+                                                <span
+                                                    class="price_cart">₦{{ number_format($cart->product->price) }}</span>
 
-                                    </div>
-                                    <div class="cart_remove">
-                                        <a href="#"><i class="ion-android-close"></i></a>
-                                    </div>
-                                </div>
-                                <div class="cart_item">
-                                    <div class="cart_img">
-                                        <a href="#"><img src="/web/assets/img/s-product/product2.jpg"
-                                                alt=""></a>
-                                    </div>
-                                    <div class="cart_info">
-                                        <a href="#">Officiis debitis</a>
-                                        <span class="quantity">Qty: 1</span>
-                                        <span class="price_cart">$69.00</span>
-                                    </div>
-                                    <div class="cart_remove">
-                                        <a href="#"><i class="ion-android-close"></i></a>
-                                    </div>
-                                </div>
-                                <div class="mini_cart_table">
-                                    <div class="cart_total">
-                                        <span>Subtotal:</span>
-                                        <span class="price">$138.00</span>
-                                    </div>
-                                </div>
+                                            </div>
+                                            <div class="cart_remove">
+                                                <form action="{{ route('delete-cart', $cart->product) }}"
+                                                    method="post">
+                                                    @csrf
+                                                    @method('delete')
+                                                    <button type="submit" class="btn"><i
+                                                            class="fa fa-close"></i></button>
+                                                </form>
 
-                                <div class="mini_cart_footer">
-                                    <div class="cart_button">
-                                        <a href="cart.html">View cart</a>
-                                        <a href="checkout.html">Checkout</a>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                    <div class="mini_cart_table">
+                                        <div class="cart_total">
+                                            <span>Subtotal:</span>
+                                            <span class="price">₦{{ number_format($vCartsTotal) }}</span>
+                                        </div>
                                     </div>
-                                </div>
 
-                            </div>
+                                    <div class="mini_cart_footer">
+                                        <div class="cart_button">
+                                            <a href="{{ route('cart') }}">View cart</a>
+                                            <a href="checkout.html">Checkout</a>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            @endif
                             <!--mini cart end-->
                         </div>
                         <div id="menu" class="text-left ">
                             <ul class="offcanvas_main_menu">
                                 <li class="menu-item-has-children active">
-                                    <a href="#">Home</a>
+                                    <a href="{{ route('home') }}">Home</a>
                                 </li>
                                 <li class="menu-item-has-children">
-                                    <a href="#">Shop</a>
+                                    <a href="{{ route('shop') }}">Shop</a>
                                 </li>
-                                <li class="menu-item-has-children">
+                                {{-- <li class="menu-item-has-children">
                                     <a href="#">Faq</a>
+                                </li> --}}
+                                <li class="menu-item-has-children">
+                                    <a href="{{ route('about') }}">about Us</a>
                                 </li>
                                 <li class="menu-item-has-children">
-                                    <a href="about.html">about Us</a>
-                                </li>
-                                <li class="menu-item-has-children">
-                                    <a href="contact.html"> Contact Us</a>
+                                    <a href="{{ route('contact') }}"> Contact Us</a>
                                 </li>
                             </ul>
                         </div>
@@ -369,6 +411,9 @@
                     <div class="col-lg-6 col-md-6">
                         <div class="widgets_container contact_us">
                             <a href="index.html"><img src="/web/assets/img/logo/logo.png" alt=""></a>
+                            <p>
+                                Welcome to Drinks, where refreshing beverages await! Explore our wide range of drinks,
+                                from soft to Alcohol, catering to every taste.</p>
                             <div class="footer_contact">
                                 <ul>
                                     <li><i class="zmdi zmdi-home"></i><span>Addresss:</span> 2 Fauconberg Rd,Chiswick,
@@ -378,72 +423,36 @@
                                     <li><i class="zmdi zmdi-email"></i><span>Email:</span> info@plazathemes.com</li>
                                 </ul>
                             </div>
-                            <div class="social_icone">
-                                <ul>
-                                    <li class="share"><a href="#" title="rss"><i
-                                                class="fa fa-share-alt"></i></a>
-                                        <div class="social_title">
-                                            <p>Subscribe</p>
-                                            <h3>Rss Feed</h3>
-                                        </div>
-                                    </li>
-                                    <li class="twitter"><a href="#" title="twitter"><i
-                                                class="fa fa-twitter"></i></a>
-                                        <div class="social_title">
-                                            <p>Follow Us</p>
-                                            <h3>Twitter</h3>
-                                        </div>
-                                    </li>
-                                    <li class="facebook"><a href="#" title="facebook"><i
-                                                class="fa fa-facebook"></i></a>
-                                        <div class="social_title">
-                                            <p>Find Us</p>
-                                            <h3>Facebook</h3>
-                                        </div>
-                                    </li>
-                                    <li class="google_plus"><a href="#" title="google"><i
-                                                class="fa fa-google-plus"></i></a>
-                                        <div class="social_title">
-                                            <p>Find Us</p>
-                                            <h3>Google+</h3>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-6">
                         <div class="row">
-                            <div class="col-lg-6 col-md-6">
+                            <div class="col-lg-6 col-md-6 d-flex justify-content-center">
                                 <div class="widgets_container widget_menu">
-                                    <h3>CUSTOMER SERVICE</h3>
+                                    <h3>Quick Links</h3>
                                     <div class="footer_menu">
                                         <ul>
-                                            <li><a href="#">Shipping & Returns</a></li>
-                                            <li><a href="#"> Secure Shopping</a></li>
-                                            <li><a href="#">International Shipping</a></li>
-                                            <li><a href="#"> Affiliates</a></li>
-                                            <li><a href="contact.html"> Contact</a></li>
-                                            <li><a href="#"> Travel</a></li>
-                                            <li><a href="#">ecommerce</a></li>
-                                            <li><a href="#"> Creative</a></li>
+                                            <li><a href="#">Home</a></li>
+                                            <li><a href="#">Shop</a></li>
+                                            <li><a href="#">About Us</a></li>
+                                            <li><a href="#">Contact Us</a></li>
                                         </ul>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-6 col-md-6">
+                            <div class="col-lg-6 col-md-6 d-flex justify-content-center">
                                 <div class="widgets_container widget_menu">
-                                    <h3>Information</h3>
+                                    <h3>Categories</h3>
                                     <div class="footer_menu">
                                         <ul>
-                                            <li><a href="about.html">About Us</a></li>
-                                            <li><a href="#">Delivery infomation</a></li>
-                                            <li><a href="#">Privacy Policy</a></li>
-                                            <li><a href="#"> Travel</a></li>
-                                            <li><a href="blog.html">Blog</a></li>
-                                            <li><a href="#">Portfolio</a></li>
-                                            <li><a href="#">Conditions</a></li>
-                                            <li><a href="#"> Frequently Questions</a></li>
+                                            <li><a href="about.html">Wine</a></li>
+                                            <li><a href="#">Beer</a></li>
+                                            <li><a href="#">Whisky</a></li>
+                                            <li><a href="#">Tequila</a></li>
+                                            <li><a href="blog.html">Cognac</a></li>
+                                            <li><a href="#">Gin</a></li>
+                                            <li><a href="#">Champagne</a></li>
+                                            <li><a href="#">vodka</a></li>
 
                                         </ul>
                                     </div>
@@ -629,6 +638,23 @@
 
     <script src="/personal/personal.js"></script>
 
+    <script>
+        $("#submitBtn").click(function () {
+            var keyword = document.getElementById("keyword").value;
+
+            console.log(keyword);
+
+            window.location.href = `http://127.0.0.1:8000/search/${keyword}`;
+        });
+
+        $("#submitBtn2").click(function () {
+        var keyword2 = document.getElementById("keyword2").value;
+
+        console.log(keyword2);
+
+        window.location.href = `http://127.0.0.1:8000/search/${keyword2}`;
+    });
+    </script>
 
 </body>
 

@@ -34,21 +34,34 @@
                                 <th class="border-top-0">Updated_at</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td>
-                                    <button class="btn btn-primary btn-sm"><i class="fa fa-trash"></i></button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                        @foreach($users as $user)
+                        <tr>
+                            <td>{{ $user->id }}</td>
+                            <td>{{ $user->fullname }}</td>
+                            <td>{{ $user->email }}</td>
+                            <td>{{ $user->created_at }}</td>
+                            <td>
+                                <form action="{{ route('admin-delete-account', $user) }}" method="post">
+                                    @csrf
+                                    @method('delete')
+                                <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-trash"></i></button>
+                            </form>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+            @if(!$users->count())
+            <div class="m-2">
+                <div class="alert alert-info" role="alert">
+                    There are no users to display yet..
                 </div>
+            </div>
+            @endif
+            <div class="m-2">
+                {{ $users->links('pagination::bootstrap-5') }}
+            </div>
             </div>
         </div>
     </div>

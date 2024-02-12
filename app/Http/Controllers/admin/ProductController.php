@@ -27,6 +27,7 @@ class ProductController extends Controller
             'name' => 'required|unique:products,name',
             'price' => 'required',
             'category' => 'required',
+            'quantity' => 'required',
             'image' => 'required|mimes:jpeg,png,jpg,jfif,webp',
             'description' => 'required',
         ]);
@@ -60,6 +61,7 @@ class ProductController extends Controller
             'colour' => $details->colour,
             'size' => $details->size,
             'category' => $details->category,
+            'quantity' => $details->quantity,
             'image' => $new_image,
             'description' => $details->description,
         ]);

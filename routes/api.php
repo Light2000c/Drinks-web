@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\api\AuthController;
 use App\Http\Controllers\api\CartController;
+use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,10 +18,17 @@ use Illuminate\Support\Facades\Route;
 */
 
 
+// Route::post("/login", [AuthController::class, 'login']);
+
+
 Route::get('cart/{userId}', [CartController::class, 'index']);
-Route::post('cart', [CartController::class, 'store']);
-Route::put('cart', [CartController::class, 'update']);
-Route::delete('cart', [CartController::class, 'destroy']);
+
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::post('cart', [CartController::class, 'store']);
+    Route::put('cart', [CartController::class, 'update']);
+    Route::delete('cart', [CartController::class, 'destroy']);
+});
+
 
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

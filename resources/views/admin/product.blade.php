@@ -122,15 +122,6 @@
 
                                                 <div class="row">
                                                     <div class="col form-group">
-                                                        <label for="brand">Brand (Optional)</label>
-                                                        <input class="form-control" type="text" name="brand"
-                                                            placeholder="Product Brand">
-                                                        @error('brand')
-                                                            <small class="text-danger">{{ $message }}</small>
-                                                        @enderror
-                                                    </div>
-
-                                                    <div class="col form-group">
                                                         <label for="price">Colour (Optional)</label>
                                                         <input class="form-control" type="text" name="colour"
                                                             placeholder="Product Colour">

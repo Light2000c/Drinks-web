@@ -17,7 +17,7 @@ async function getCart(userId) {
 
         const response = await fetch(url);
         var data = await response.json();
-        console.log(data);
+        console.log("data is ==> ", data);
 
         carts = data;
 
@@ -89,7 +89,7 @@ async function updateQuantity(productId, userId) {
     var requestData = {
         productId: productId,
         userId: userId,
-        quantity: quantity
+        quantity: quantity,
     }
 
     $.ajax({
@@ -101,6 +101,7 @@ async function updateQuantity(productId, userId) {
         headers: {
             accept: 'application/json',
             contentType: 'application/json',
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (data) {
             console.log(data);

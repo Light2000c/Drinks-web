@@ -35,10 +35,17 @@ class Product extends Model
         return $this->cart->contains('user_id', $user->id);
     }
 
+
+    public function hasWish(User $user)
+    {
+        return $this->wish->contains('user_id', $user->id);
+    }
+
     public function cartQuantity(User $user)
     {
         return $this->hasCart($user) ? $this->cart->where('user_id', $user->id)->first()->quantity : 1;
     }
+
 
     public function order(){
         return $this->hasMany(Order::class());

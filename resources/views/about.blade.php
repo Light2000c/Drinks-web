@@ -1,8 +1,6 @@
 @extends('layouts.app')
 
-@section('content')
-   <P>they are good <Br/> they arr good 2</P>
-   
+@section('content')  
     <!--breadcrumbs area start-->
     <div class="breadcrumbs_area">
         <div class="container">
@@ -22,23 +20,37 @@
     <!--about section area -->
     <div class="about_section mt-60">
         <div class="container">
-            <div class="row">
+            <div class="row mb-5">
                 <div class="col-lg-6 col-md-12">
                     <div class="about_thumb">
-                        <img src="assets/img/about/about1.jpg" alt="">
+                        <img src="/images/abt-5.avif" alt="">
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-12">
                     <div class="about_content">
-                        <h1>Welcome To Pallas Store!</h1>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta impedit velit maiores nemo
-                            perferendis facere a assumenda in sint illo provident pariatur ullam voluptates id eveniet optio
-                            neque perspiciatis dolores quod, quisquam! Repellendus alias laudantium nesciunt nostrum magnam
-                            debitis quidem aut temporibus expedita accusantium, illum ipsam eos, eveniet explicabo
-                            assumenda, laboriosam modi fugiat dolores dolor sit.</p>
+                        <h1>Welcome To Drinks!</h1>
+                        <p>Welcome to Drinks, your ultimate destination for both alcoholic and non-alcoholic wines! Explore our curated selection of exquisite options, from rich reds to crisp whites, catering to every palate. Whether you're celebrating or simply unwinding, find your perfect bottle with us. Convenient online ordering and swift delivery make indulging in fine wines effortless. Elevate your wine experience with Drinks today!</p>
                         <div class="view__work">
-                            <a href="#">view work </a>
+                            <a href="{{ route('shop') }}">Visit Our Shop</a>
                         </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-5 mt-5">
+                <div class="col-lg-6 col-md-12">
+                    <div class="about_content">
+                        <h2>Mission</h2>
+                        <p>At Drinks, our mission is to offer a diverse selection of alcoholic and non-alcoholic wines, providing an exceptional shopping experience through convenient online ordering and prompt delivery. We aim to make the enjoyment of fine wines accessible to all, fostering a culture of celebration and appreciation.!</p>
+                    </div>
+                    <div class="about_content">
+                        <h2>Vision</h2>
+                        <p>Our vision at Drinks is to be the premier destination for wine enthusiasts, known for our exceptional quality, variety, and commitment to customer satisfaction. We aspire to continuously innovate, champion sustainability, and share the joys of wine with the world.</p>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-12">
+                    <div class="about_thumb">
+                        <img src="/images/abt-1.jpg" alt="">
                     </div>
                 </div>
             </div>
@@ -99,69 +111,4 @@
         </div>
     </div>
     <!--counterup end-->
-
-    <!--about progress bar -->
-    <div class="about_progressbar">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-6 col-md-6">
-                    <div class="progressbar_inner">
-                        <h2>We have Skills to show</h2>
-                        <div class="progress_skill one">
-                            <div class="progress">
-                                <div class="progress-bar about_prog wow fadeInLeft" data-wow-duration="0.8s"
-                                    data-wow-delay=".3s" role="progressbar" aria-valuenow="25" aria-valuemin="0"
-                                    aria-valuemax="100">
-                                    <span class="progress_persent">html/css</span>
-                                </div>
-                            </div>
-                            <span class="progress_discount">60%</span>
-                        </div>
-                        <div class="progress_skill two">
-                            <div class="progress">
-                                <div class="progress-bar about_prog wow fadeInLeft" data-wow-duration="0.8s"
-                                    data-wow-delay=".5s" role="progressbar" aria-valuenow="25" aria-valuemin="0"
-                                    aria-valuemax="100">
-
-                                    <span class="progress_persent">ecommerce theme </span>
-                                </div>
-
-                            </div>
-                            <span class="progress_discount">90%</span>
-                        </div>
-                        <div class="progress_skill three">
-                            <div class="progress">
-                                <div class="progress-bar about_prog wow fadeInLeft" data-wow-duration="0.8s"
-                                    data-wow-delay=".7s" role="progressbar" aria-valuenow="25" aria-valuemin="0"
-                                    aria-valuemax="100">
-
-                                    <span class="progress_persent">Typhography </span>
-                                </div>
-
-                            </div>
-                            <span class="progress_discount">70%</span>
-                        </div>
-                        <div class="progress_skill four">
-                            <div class="progress">
-                                <div class="progress-bar about_prog wow fadeInLeft" data-wow-duration="0.8s"
-                                    data-wow-delay=".7s" role="progressbar" aria-valuenow="25" aria-valuemin="0"
-                                    aria-valuemax="100">
-
-                                    <span class="progress_persent">Branding </span>
-                                </div>
-
-                            </div>
-                            <span class="progress_discount">80%</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-md-6">
-                    <div class="about__img">
-                        <img src="assets/img/about/about2.jpg" alt="">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--about progress bar end -->
 @endsection

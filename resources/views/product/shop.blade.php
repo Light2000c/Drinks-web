@@ -67,13 +67,20 @@
                         </div>
                         <!--shop toolbar end-->
 
-                        <div class="row no-gutters shop_wrapper">
-                            @foreach ($products as $product)
-                                <div class="col-lg-4 col-md-4 col-12 ">
-                                    <x-product-component :product="$product" />
-                                </div>
-                            @endforeach
-                        </div>
+                        @if ($products->count())
+                            <div class="row no-gutters shop_wrapper">
+
+                                @foreach ($products as $product)
+                                    <div class="col-lg-4 col-md-4 col-12 ">
+                                        <x-product-component :product="$product" />
+                                    </div>
+                                @endforeach
+                            </div>
+                        @else
+                            <div class="alert alert-primary" role="alert">
+                                No products to show yet.
+                            </div>
+                        @endif
 
                         <div class="shop_toolbar t_bottom">
                             {{ $products->links('pagination::bootstrap-4') }}
@@ -114,270 +121,39 @@
                                     {{-- </form> --}}
                                 </div>
 
-                                
-                                    <div class="d-grid mb-5" style="width: 100%">
-                                        <button type="submit" class="btn btn-primary btn-block">Apply Filter</button>
-                                    </div>
+
+                                <div class="d-grid mb-5" style="width: 100%">
+                                    <button type="submit" class="btn btn-primary btn-block">Apply Filter</button>
+                                </div>
                             </form>
 
                             <div class="widget_list recent_product">
                                 <h2>Top Rated Products</h2>
                                 <div class="recent_product_container">
+                                    @if($newProducts)
+                                    @foreach($newProducts as $product)
                                     <div class="recent_product_list">
                                         <div class="recent_product_thumb">
-                                            <a href="product-details.html"><img src="/web/assets/img/s-product/product.jpg"
+                                            <a href="{{ route('product-details', $product) }}"><img src="/products/{{ $product->image }}"
                                                     alt=""></a>
                                         </div>
                                         <div class="recent_product_content">
-                                            <h3><a href="product-details.html">Natus erro</a></h3>
-                                            <div class="product_rating">
-                                                <ul>
-                                                    <li><a href="#"><i class="zmdi zmdi-star-outline"></i></a></li>
-                                                    <li><a href="#"><i class="zmdi zmdi-star-outline"></i></a></li>
-                                                    <li><a href="#"><i class="zmdi zmdi-star-outline"></i></a></li>
-                                                    <li><a href="#"><i class="zmdi zmdi-star-outline"></i></a></li>
-                                                    <li><a href="#"><i class="zmdi zmdi-star-outline"></i></a></li>
-                                                </ul>
-                                            </div>
+                                            <h3><a href="{{ route('product-details', $product) }}">{{ $product->name }}</a></h3>
+        
+                                            @if($product->discount)
                                             <div class="price_box">
-                                                <span class="current_price">$65.00</span>
-                                                <span class="old_price">$70.00</span>
+                                                <span class="current_price">{{ $product->discount }}</span>
+                                                <span class="old_price">{{ $product->price }}</span>
                                             </div>
+                                            @else
+                                            <div class="price_box">
+                                                <span class="current_price">{{ $product->price }}</span>
+                                            </div>
+                                            @endif
                                         </div>
                                     </div>
-                                    <div class="recent_product_list">
-                                        <div class="recent_product_thumb">
-                                            <a href="product-details.html"><img
-                                                    src="/web/assets/img/s-product/product2.jpg" alt=""></a>
-                                        </div>
-                                        <div class="recent_product_content">
-                                            <h3><a href="product-details.html">Nemo enim</a></h3>
-                                            <div class="product_rating">
-                                                <ul>
-                                                    <li><a href="#"><i class="zmdi zmdi-star-outline"></i></a></li>
-                                                    <li><a href="#"><i class="zmdi zmdi-star-outline"></i></a></li>
-                                                    <li><a href="#"><i class="zmdi zmdi-star-outline"></i></a></li>
-                                                    <li><a href="#"><i class="zmdi zmdi-star-outline"></i></a></li>
-                                                    <li><a href="#"><i class="zmdi zmdi-star-outline"></i></a></li>
-                                                </ul>
-                                            </div>
-                                            <div class="price_box">
-                                                <span class="current_price">$65.00</span>
-                                                <span class="old_price">$70.00</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="recent_product_list">
-                                        <div class="recent_product_thumb">
-                                            <a href="product-details.html"><img
-                                                    src="/web/assets/img/s-product/product3.jpg" alt=""></a>
-                                        </div>
-                                        <div class="recent_product_content">
-                                            <h3><a href="product-details.html">Consequuntur magni</a></h3>
-                                            <div class="product_rating">
-                                                <ul>
-                                                    <li><a href="#"><i class="zmdi zmdi-star-outline"></i></a></li>
-                                                    <li><a href="#"><i class="zmdi zmdi-star-outline"></i></a></li>
-                                                    <li><a href="#"><i class="zmdi zmdi-star-outline"></i></a></li>
-                                                    <li><a href="#"><i class="zmdi zmdi-star-outline"></i></a></li>
-                                                    <li><a href="#"><i class="zmdi zmdi-star-outline"></i></a></li>
-                                                </ul>
-                                            </div>
-                                            <div class="price_box">
-                                                <span class="current_price">$65.00</span>
-                                                <span class="old_price">$70.00</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="recent_product_list">
-                                        <div class="recent_product_thumb">
-                                            <a href="product-details.html"><img
-                                                    src="/web/assets/img/s-product/product4.jpg" alt=""></a>
-                                        </div>
-                                        <div class="recent_product_content">
-                                            <h3><a href="product-details.html">Cras neque</a></h3>
-                                            <div class="product_rating">
-                                                <ul>
-                                                    <li><a href="#"><i class="zmdi zmdi-star-outline"></i></a></li>
-                                                    <li><a href="#"><i class="zmdi zmdi-star-outline"></i></a></li>
-                                                    <li><a href="#"><i class="zmdi zmdi-star-outline"></i></a></li>
-                                                    <li><a href="#"><i class="zmdi zmdi-star-outline"></i></a></li>
-                                                    <li><a href="#"><i class="zmdi zmdi-star-outline"></i></a></li>
-                                                </ul>
-                                            </div>
-                                            <div class="price_box">
-                                                <span class="current_price">$65.00</span>
-                                                <span class="old_price">$70.00</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="recent_product_list">
-                                        <div class="recent_product_thumb">
-                                            <a href="product-details.html"><img
-                                                    src="/web/assets/img/s-product/product5.jpg" alt=""></a>
-                                        </div>
-                                        <div class="recent_product_content">
-                                            <h3><a href="product-details.html">Endurance2</a></h3>
-                                            <div class="product_rating">
-                                                <ul>
-                                                    <li><a href="#"><i class="zmdi zmdi-star-outline"></i></a></li>
-                                                    <li><a href="#"><i class="zmdi zmdi-star-outline"></i></a></li>
-                                                    <li><a href="#"><i class="zmdi zmdi-star-outline"></i></a></li>
-                                                    <li><a href="#"><i class="zmdi zmdi-star-outline"></i></a></li>
-                                                    <li><a href="#"><i class="zmdi zmdi-star-outline"></i></a></li>
-                                                </ul>
-                                            </div>
-                                            <div class="price_box">
-                                                <span class="current_price">$65.00</span>
-                                                <span class="old_price">$70.00</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="recent_product_list">
-                                        <div class="recent_product_thumb">
-                                            <a href="product-details.html"><img
-                                                    src="/web/assets/img/s-product/product6.jpg" alt=""></a>
-                                        </div>
-                                        <div class="recent_product_content">
-                                            <h3><a href="product-details.html">Crown Summit1</a></h3>
-                                            <div class="product_rating">
-                                                <ul>
-                                                    <li><a href="#"><i class="zmdi zmdi-star-outline"></i></a></li>
-                                                    <li><a href="#"><i class="zmdi zmdi-star-outline"></i></a></li>
-                                                    <li><a href="#"><i class="zmdi zmdi-star-outline"></i></a></li>
-                                                    <li><a href="#"><i class="zmdi zmdi-star-outline"></i></a></li>
-                                                    <li><a href="#"><i class="zmdi zmdi-star-outline"></i></a></li>
-                                                </ul>
-                                            </div>
-                                            <div class="price_box">
-                                                <span class="current_price">$65.00</span>
-                                                <span class="old_price">$70.00</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="recent_product_list">
-                                        <div class="recent_product_thumb">
-                                            <a href="product-details.html"><img
-                                                    src="/web/assets/img/s-product/product7.jpg" alt=""></a>
-                                        </div>
-                                        <div class="recent_product_content">
-                                            <h3><a href="product-details.html">Compete Hoodie3</a></h3>
-                                            <div class="product_rating">
-                                                <ul>
-                                                    <li><a href="#"><i class="zmdi zmdi-star-outline"></i></a></li>
-                                                    <li><a href="#"><i class="zmdi zmdi-star-outline"></i></a></li>
-                                                    <li><a href="#"><i class="zmdi zmdi-star-outline"></i></a></li>
-                                                    <li><a href="#"><i class="zmdi zmdi-star-outline"></i></a></li>
-                                                    <li><a href="#"><i class="zmdi zmdi-star-outline"></i></a></li>
-                                                </ul>
-                                            </div>
-                                            <div class="price_box">
-                                                <span class="current_price">$65.00</span>
-                                                <span class="old_price">$70.00</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="recent_product_list">
-                                        <div class="recent_product_thumb">
-                                            <a href="product-details.html"><img
-                                                    src="/web/assets/img/s-product/product3.jpg" alt=""></a>
-                                        </div>
-                                        <div class="recent_product_content">
-                                            <h3><a href="product-details.html">Crown Summit1</a></h3>
-                                            <div class="product_rating">
-                                                <ul>
-                                                    <li><a href="#"><i class="zmdi zmdi-star-outline"></i></a></li>
-                                                    <li><a href="#"><i class="zmdi zmdi-star-outline"></i></a></li>
-                                                    <li><a href="#"><i class="zmdi zmdi-star-outline"></i></a></li>
-                                                    <li><a href="#"><i class="zmdi zmdi-star-outline"></i></a></li>
-                                                    <li><a href="#"><i class="zmdi zmdi-star-outline"></i></a></li>
-                                                </ul>
-                                            </div>
-                                            <div class="price_box">
-                                                <span class="current_price">$65.00</span>
-                                                <span class="old_price">$70.00</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="recent_product_list">
-                                        <div class="recent_product_thumb">
-                                            <a href="product-details.html"><img
-                                                    src="/web/assets/img/s-product/product4.jpg" alt=""></a>
-                                        </div>
-                                        <div class="recent_product_content">
-                                            <h3><a href="product-details.html">Crown Summit1</a></h3>
-                                            <div class="price_box">
-                                                <span class="current_price">$65.00</span>
-                                                <span class="old_price">$70.00</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="recent_product_list">
-                                        <div class="recent_product_thumb">
-                                            <a href="product-details.html"><img
-                                                    src="/web/assets/img/s-product/product5.jpg" alt=""></a>
-                                        </div>
-                                        <div class="recent_product_content">
-                                            <h3><a href="product-details.html">Crown Summit1</a></h3>
-                                            <div class="product_rating">
-                                                <ul>
-                                                    <li><a href="#"><i class="zmdi zmdi-star-outline"></i></a></li>
-                                                    <li><a href="#"><i class="zmdi zmdi-star-outline"></i></a></li>
-                                                    <li><a href="#"><i class="zmdi zmdi-star-outline"></i></a></li>
-                                                    <li><a href="#"><i class="zmdi zmdi-star-outline"></i></a></li>
-                                                    <li><a href="#"><i class="zmdi zmdi-star-outline"></i></a></li>
-                                                </ul>
-                                            </div>
-                                            <div class="price_box">
-                                                <span class="current_price">$65.00</span>
-                                                <span class="old_price">$70.00</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="recent_product_list">
-                                        <div class="recent_product_thumb">
-                                            <a href="product-details.html"><img
-                                                    src="/web/assets/img/s-product/product6.jpg" alt=""></a>
-                                        </div>
-                                        <div class="recent_product_content">
-                                            <h3><a href="product-details.html">Crown Summit1</a></h3>
-                                            <div class="product_rating">
-                                                <ul>
-                                                    <li><a href="#"><i class="zmdi zmdi-star-outline"></i></a></li>
-                                                    <li><a href="#"><i class="zmdi zmdi-star-outline"></i></a></li>
-                                                    <li><a href="#"><i class="zmdi zmdi-star-outline"></i></a></li>
-                                                    <li><a href="#"><i class="zmdi zmdi-star-outline"></i></a></li>
-                                                    <li><a href="#"><i class="zmdi zmdi-star-outline"></i></a></li>
-                                                </ul>
-                                            </div>
-                                            <div class="price_box">
-                                                <span class="current_price">$65.00</span>
-                                                <span class="old_price">$70.00</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="recent_product_list">
-                                        <div class="recent_product_thumb">
-                                            <a href="product-details.html"><img
-                                                    src="/web/assets/img/s-product/product7.jpg" alt=""></a>
-                                        </div>
-                                        <div class="recent_product_content">
-                                            <h3><a href="product-details.html">Crown Summit1</a></h3>
-                                            <div class="product_rating">
-                                                <ul>
-                                                    <li><a href="#"><i class="zmdi zmdi-star-outline"></i></a></li>
-                                                    <li><a href="#"><i class="zmdi zmdi-star-outline"></i></a></li>
-                                                    <li><a href="#"><i class="zmdi zmdi-star-outline"></i></a></li>
-                                                    <li><a href="#"><i class="zmdi zmdi-star-outline"></i></a></li>
-                                                    <li><a href="#"><i class="zmdi zmdi-star-outline"></i></a></li>
-                                                </ul>
-                                            </div>
-                                            <div class="price_box">
-                                                <span class="current_price">$65.00</span>
-                                                <span class="old_price">$70.00</span>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    @endforeach
+                                    @endif
                                 </div>
                             </div>
 
@@ -392,7 +168,6 @@
         <script>
             var userId = {{ Auth::user() ? Auth::user()->id : '' }};
             var products = @json($products);
-
 
             if (userId != '') {
                 $('document').ready(async function() {

@@ -29,23 +29,35 @@
                         <div class="d-flex justify-content-end mb-2">
                             <button id="closeForm" class="btn btn-primary"> Close Form</button>
                         </div>
+
+                        <form action="{{ route('admin-team-member') }}" method="post">
+                            @csrf
                         <div class="form-group">
                             <div class="row">
                                 <div class="col form-group">
                                     <label for="name">Name</label>
-                                    <input class="form-control" type="text" name="name" placeholder="Product Name">
+                                    <input class="form-control" type="text" value="{{ old("fullname") }}" name="fullname" placeholder="Product Name">
+                                    @error('fullname')
+                                    <small class="text-danger">{{ $message }}</small>
+                                    @enderror
                                 </div>
 
                                 <div class="col form-group">
                                     <label for="price">Email</label>
-                                    <input class="form-control" type="email" name="email" placeholder="example@gmail.com">
+                                    <input class="form-control" type="email" value="{{ old("email") }}" name="email" placeholder="example@gmail.com">
+                                    @error('email')
+                                    <small class="text-danger">{{ $message }}</small>
+                                    @enderror
                                 </div>
                             </div>
 
                             <div class="row">
                             <div class="col form-group">
                                 <label for="name">Password</label>
-                                <input class="form-control" type="password" name="password" placeholder="Create Password">
+                                <input class="form-control" type="password" value="{{ old("password") }}" name="password" placeholder="Create Password">
+                                @error('password')
+                                <small class="text-danger">{{ $message }}</small>
+                                @enderror
                             </div>
 
                             <div class="col form-group">
@@ -56,10 +68,11 @@
 
 
                         <div class="d-grid">
-                            <button class="btn btn-primary btn-block">Add Member</button>
+                            <button type="submit" class="btn btn-primary btn-block">Add Member</button>
                         </div>
+                        </div>
+                    </form>
 
-                        </div>
                         </div>
                     </div>
                 </div>
@@ -71,25 +84,37 @@
                                 <th class="border-top-0">ID</th>                               
                                 <th class="border-top-0">Name</th>
                                 <th class="border-top-0">Email</th>
-                                <th class="border-top-0">Phone</th>
                                 <th class="border-top-0">Created_at</th>
-                                <th class="border-top-0">Updated_at</th>
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach($team_members as $member)
                             <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td>{{ $member->id }}</td>
+                                <td>{{ $member->fullname }}</td>
+                                <td>{{ $member->email }}</td>
+                                <td>{{ $member->created_at }}</td>
                                 <td>
-                                    <button class="btn btn-primary btn-sm"><i class="fa fa-trash"></i></button>
+                                    <form action="{{ route('admin-delete-account', $member) }}" method="post">
+                                        @csrf
+                                        @method('delete')
+                                    <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-trash"></i></button>
+                                </form>
                                 </td>
                             </tr>
+                            @endforeach
                         </tbody>
                     </table>
+                </div>
+                @if(!$team_members->count())
+                <div class="m-2">
+                    <div class="alert alert-info" role="alert">
+                        There are no team members to display yet..
+                    </div>
+                </div>
+                @endif
+                <div class="m-2">
+                    {{ $team_members->links('pagination::bootstrap-5') }}
                 </div>
             </div>
         </div>

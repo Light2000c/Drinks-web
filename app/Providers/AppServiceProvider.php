@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Cart;
+use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -43,5 +44,13 @@ class AppServiceProvider extends ServiceProvider
             }
 
         });
+
+
+        // VerifyEmail::toMailUsing(function ($notifiable, $url) {
+        //     return (new \Illuminate\Notifications\Messages\MailMessage)
+        //         ->subject('Verify your email address new')
+        //         ->line('Click the button below to verify your email address.')
+        //         ->action('Verify Email Address', $url);
+        // });
     }
 }
